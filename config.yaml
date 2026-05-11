@@ -14,24 +14,30 @@ openai_compatible:
   # api_key pulled from TOGETHER_API_KEY env var (or OPENAI_API_KEY for OpenRouter)
 
 agent:
-  max_turns: 20           # max tool-call rounds before forcing a final answer
+  max_turns: 10
   system_prompt: |
     You are a capable AI assistant with access to tools. Think step-by-step.
     Use tools when they help you produce a better or more accurate answer.
     When you have enough information, give a clear, concise final answer.
 
+# General-purpose tools (used by main.py interactive mode)
 tools:
-  web_search: false       # set true if you add a SerpAPI / Brave key
+  web_search: false
   calculator: true
-  read_file: true
-  write_file: true
-  run_shell: false        # dangerous — enable only in sandboxed environments
+  read_file: false
+  write_file: false
+  run_shell: false
   current_time: true
-  http_get: true
+  http_get: false
 
 shell:
-  allowed_commands: []    # e.g. ["ls", "cat", "python"] — only used when run_shell: true
+  allowed_commands: []
   working_directory: .
+
+# Fitness agent settings (used by webhook.py)
+fitness:
+  default_user: default   # user_id when sender is unknown
+  conversation_history: 16  # messages to include as context
 
 logging:
   level: INFO             # DEBUG | INFO | WARNING
