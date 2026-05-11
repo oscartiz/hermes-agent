@@ -1,0 +1,39 @@
+# Hermes Agent Configuration
+# ----------------------------
+# Provider: "ollama" (local) or "openai" (Together AI, OpenRouter, etc.)
+
+provider: ollama
+
+ollama:
+  base_url: http://localhost:11434
+  model: hermes3          # or: hermes3:8b, hermes3:70b, adrienbrault/nous-hermes2pro-llama3-8b
+
+openai_compatible:
+  base_url: https://api.together.xyz/v1
+  model: NousResearch/Hermes-3-Llama-3.1-70B-Turbo
+  # api_key pulled from TOGETHER_API_KEY env var (or OPENAI_API_KEY for OpenRouter)
+
+agent:
+  max_turns: 20           # max tool-call rounds before forcing a final answer
+  system_prompt: |
+    You are a capable AI assistant with access to tools. Think step-by-step.
+    Use tools when they help you produce a better or more accurate answer.
+    When you have enough information, give a clear, concise final answer.
+
+tools:
+  web_search: false       # set true if you add a SerpAPI / Brave key
+  calculator: true
+  read_file: true
+  write_file: true
+  run_shell: false        # dangerous — enable only in sandboxed environments
+  current_time: true
+  http_get: true
+
+shell:
+  allowed_commands: []    # e.g. ["ls", "cat", "python"] — only used when run_shell: true
+  working_directory: .
+
+logging:
+  level: INFO             # DEBUG | INFO | WARNING
+  show_tool_calls: true
+  show_raw_response: false
